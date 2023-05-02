@@ -17,12 +17,12 @@ public class Users {
     private String name;
 
 
-    @Column(name = "Email")
+    @Column(name = "email")
     @Email(message = "you should enter a valid email")
     private String email;
 
 
-    @Column(name = "Password")
+    @Column(name = "password")
     @NotEmpty(message = "password must not be empty")
     private String password;
 
@@ -33,11 +33,11 @@ public class Users {
     private String phone;
 
 
-    @Column(name = "Status")
+    @Column(name = "status")
     private long status;
 
 
-    @Column(name = "Type")
+    @Column(name = "type")
     private long type;
 
 
