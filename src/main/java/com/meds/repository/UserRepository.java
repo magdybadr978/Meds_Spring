@@ -1,6 +1,6 @@
-package com.hr.repository;
+package com.meds.repository;
 
-import com.hr.model.Users;
+import com.meds.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.hr.cotroller;
+package com.meds.cotroller;
 
-import com.hr.model.Users;
-import com.hr.service.UserService;
+import com.meds.model.Users;
+import com.meds.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

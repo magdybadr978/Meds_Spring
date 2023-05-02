@@ -1,4 +1,4 @@
-package com.hr;
+package com.meds;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

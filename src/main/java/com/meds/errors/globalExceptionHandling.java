@@ -1,4 +1,4 @@
-package com.hr.errors;
+package com.meds.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

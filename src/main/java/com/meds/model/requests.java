@@ -1,4 +1,4 @@
-package com.hr.model;
+package com.meds.model;
 
 import jakarta.persistence.*;
 

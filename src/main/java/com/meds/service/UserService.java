@@ -1,7 +1,7 @@
-package com.hr.service;
+package com.meds.service;
 
-import com.hr.model.Users;
-import com.hr.repository.UserRepository;
+import com.meds.model.Users;
+import com.meds.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

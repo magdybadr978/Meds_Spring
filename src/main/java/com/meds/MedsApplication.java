@@ -1,4 +1,4 @@
-package com.hr;
+package com.meds;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
