@@ -15,12 +15,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getUsers")
+    @GetMapping("/getAllUsers")
     public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/getSpecificUser/{id}")
     public Users getSpecificUser(@PathVariable long id) {
 
         return userService.getSpecificUser(id);
@@ -53,3 +53,5 @@ public class UserController {
     }
 
 }
+
+

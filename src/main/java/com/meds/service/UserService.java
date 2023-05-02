@@ -13,7 +13,12 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<Users> getAllUsers() {
-        return userRepository.findAll();
+        try{
+            return userRepository.findAll();
+        } catch(Exception e){
+          throw new RuntimeException("there is error in  get all users");
+        }
+
     }
 
     public Users getSpecificUser(long id) {
@@ -25,15 +30,30 @@ public class UserService {
     }
 
     public void addUser(Users user) {
-        userRepository.save(user);
+        try{
+            userRepository.save(user);
+        }catch (Exception e){
+            throw new RuntimeException("there is error in add user");
+        }
+
     }
 
     public void updateUser(Users user) {
-        userRepository.save(user);
+        try{
+            userRepository.save(user);
+        }catch (Exception e){
+            throw new RuntimeException("there is error in update user");
+        }
+
     }
 
     public void deleteUser(long id) {
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        }catch (Exception e){
+            throw new RuntimeException("there is error in delete user");
+        }
+
     }
 
 }
