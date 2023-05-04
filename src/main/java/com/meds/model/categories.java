@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 @Table(name = "Categories")
 public class categories {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
     @Column(name = "name")

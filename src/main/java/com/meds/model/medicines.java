@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "Medicines")
 public class medicines {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "name")
     @NotEmpty(message = "name must not be empty")
