@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Medicines")
-public class medicines {
+public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name")
+
     @NotEmpty(message = "name must not be empty")
     private String name;
 
@@ -29,12 +29,12 @@ public class medicines {
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private categories category_id;
+    private Category category_id;
 
-    public medicines() {
+    public Medicine() {
     }
 
-    public medicines(long id, String name, String description, long price, String expiration_date, categories category_id) {
+    public Medicine(long id, String name, String description, long price, String expiration_date, Category category_id) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -63,7 +63,7 @@ public class medicines {
         this.expiration_date = expiration_date;
     }
 
-    public void setCategory_id(categories category_id) {
+    public void setCategory_id(Category category_id) {
         this.category_id = category_id;
     }
 
@@ -87,7 +87,7 @@ public class medicines {
         return expiration_date;
     }
 
-    public categories getCategory_id() {
-        return category_id;
+    public long getCategory_id() {
+        return category_id.getId();
     }
 }

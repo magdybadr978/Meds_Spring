@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Categories")
-public class categories {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -17,11 +17,11 @@ public class categories {
     @NotEmpty(message = "description must not be empty")
     private  String description;
 
-    public categories() {
+    public Category() {
 
     }
 
-    public categories(long id, String name, String description) {
+    public Category(long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;

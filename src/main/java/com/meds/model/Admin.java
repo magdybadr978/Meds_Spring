@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -41,11 +41,11 @@ public class Users {
     private long type;
 
 
-    public Users() {
+    public Admin() {
 
     }
 
-    public Users(long id, String name, String email, String password, String phone, long status, long type) {
+    public Admin(long id, String name, String email, String password, String phone, long status, long type) {
         this.id = id;
         this.name = name;
         this.email = email;

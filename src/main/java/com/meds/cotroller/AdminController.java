@@ -1,7 +1,7 @@
 package com.meds.cotroller;
 
-import com.meds.model.Users;
-import com.meds.service.UserService;
+import com.meds.model.Admin;
+import com.meds.service.AdminService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,39 +11,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class UserController {
+public class AdminController {
     @Autowired
-    private UserService userService;
+    private AdminService userService;
 
     @GetMapping("/getAllUsers")
-    public List<Users> getAllUsers() {
+    public List<Admin> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/getSpecificUser/{id}")
-    public Users getSpecificUser(@PathVariable long id) {
+    public Admin getSpecificUser(@PathVariable long id) {
 
         return userService.getSpecificUser(id);
 
     }
 
     @GetMapping("/getUserByName")
-    public List<Users> getUserByName(@RequestParam String name) {
+    public List<Admin> getUserByName(@RequestParam String name) {
 
         return userService.getUserByName(name);
 
     }
 
     @PostMapping("/createUser")
-    public ResponseEntity<Users> addUser(@Valid @RequestBody Users newUser) {
+    public ResponseEntity<Admin> addUser(@Valid @RequestBody Admin newUser) {
         userService.addUser(newUser);
-        return new ResponseEntity<Users>(newUser, HttpStatus.OK);
+        return new ResponseEntity<Admin>(newUser, HttpStatus.OK);
     }
 
     @PutMapping("/updateUser")
-    public ResponseEntity<Users> updateUser(@Valid @RequestBody Users newUser) {
+    public ResponseEntity<Admin> updateUser(@Valid @RequestBody Admin newUser) {
         userService.updateUser(newUser);
-        return new ResponseEntity<Users>(newUser, HttpStatus.OK);
+        return new ResponseEntity<Admin>(newUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteUser/{id}")

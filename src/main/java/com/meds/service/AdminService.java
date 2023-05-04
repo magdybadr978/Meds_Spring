@@ -1,6 +1,6 @@
 package com.meds.service;
 
-import com.meds.model.Users;
+import com.meds.model.Admin;
 import com.meds.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService {
+public class AdminService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Users> getAllUsers() {
+    public List<Admin> getAllUsers() {
         try{
             return userRepository.findAll();
         } catch(Exception e){
@@ -21,15 +21,15 @@ public class UserService {
 
     }
 
-    public Users getSpecificUser(long id) {
+    public Admin getSpecificUser(long id) {
         return userRepository.findById(id).orElseThrow(null);
     }
 
-    public List<Users> getUserByName(String name) {
+    public List<Admin> getUserByName(String name) {
         return userRepository.findByName(name);
     }
 
-    public void addUser(Users user) {
+    public void addUser(Admin user) {
         try{
             userRepository.save(user);
         }catch (Exception e){
@@ -38,7 +38,7 @@ public class UserService {
 
     }
 
-    public void updateUser(Users user) {
+    public void updateUser(Admin user) {
         try{
             userRepository.save(user);
         }catch (Exception e){
