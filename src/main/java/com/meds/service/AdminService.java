@@ -1,7 +1,7 @@
 package com.meds.service;
 
 import com.meds.model.Admin;
-import com.meds.repository.UserRepository;
+import com.meds.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class AdminService {
     @Autowired
-    private UserRepository userRepository;
+    private AdminRepository userRepository;
 
     public List<Admin> getAllUsers() {
         try{
