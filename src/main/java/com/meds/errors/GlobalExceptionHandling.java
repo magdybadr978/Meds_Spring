@@ -51,4 +51,12 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+
+    @ExceptionHandler(ForbiddenException.class)
+    public final ResponseEntity<ErrorResponse> handleForbiddenException(Exception ex, WebRequest request) {
+        List<String> detalis = new ArrayList<>();
+        detalis.add(ex.getLocalizedMessage());
+        ErrorResponse error = new ErrorResponse("Forbidden", detalis);
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
 }

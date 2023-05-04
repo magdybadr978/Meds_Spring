@@ -1,20 +1,22 @@
 package com.meds.service;
 
 import com.meds.errors.RecordNotFoundException;
+import com.meds.errors.ForbiddenException;
 import com.meds.model.Medicine;
+import com.meds.repository.AdminRepository;
 import com.meds.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MedicineService {
 
     @Autowired
     private MedicineRepository medicineRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
     public List<Medicine> getAllMedicines(){
         return medicineRepository.findAll();
@@ -31,5 +33,20 @@ public class MedicineService {
                 () -> new RecordNotFoundException("This Medicine Not Found")
         );
     }
+
+
+    public void insertMedicine(Medicine medicine, long id){
+        adminRepository.userIsExists(id).orElseThrow(
+                ()-> new RecordNotFoundException("Not found this user")
+        );
+
+        adminRepository.isAuth(id).orElseThrow(
+                ()-> new ForbiddenException("Sorry, this user forbidden for this option")
+        );
+
+        medicineRepository.save(medicine);
+    }
+
+
 
 }

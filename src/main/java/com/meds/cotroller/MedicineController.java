@@ -2,7 +2,10 @@ package com.meds.cotroller;
 
 import com.meds.model.Medicine;
 import com.meds.service.MedicineService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,16 +23,17 @@ public class MedicineController {
     }
 
     @GetMapping("/{id}")
-    private Medicine getMedicineById(@PathVariable long id){
+    public Medicine getMedicineById(@PathVariable long id){
         return medicineService.getMedicineById(id);
     }
     @GetMapping()
-    private List<Medicine> filterMedicine(@RequestParam("nameBind") String name){
+    public List<Medicine> filterMedicine(@RequestParam("nameBind") String name){
         return medicineService.filterMedicine(name);
     }
 
-
-
-
-
+    @PostMapping("insert/{id}")
+    public ResponseEntity<Medicine> insertMedicine(@RequestBody @Valid Medicine medicine, @PathVariable long id){
+        medicineService.insertMedicine(medicine,id);
+        return new ResponseEntity<>(medicine, HttpStatus.OK);
+    }
 }
