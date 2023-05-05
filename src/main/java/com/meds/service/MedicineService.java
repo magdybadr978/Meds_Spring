@@ -1,5 +1,7 @@
 package com.meds.service;
 
+import com.meds.configration.MedicineConfig;
+import com.meds.configration.UserConfig;
 import com.meds.errors.RecordNotFoundException;
 import com.meds.errors.ForbiddenException;
 import com.meds.model.Medicine;
@@ -18,7 +20,11 @@ public class MedicineService{
     @Autowired
     private AdminRepository adminRepository;
 
+    @Autowired
+    private UserConfig userConfig;
 
+    @Autowired
+    private MedicineConfig medicineConfig;
 
 
     public List<Medicine> getAllMedicines(){
@@ -38,49 +44,29 @@ public class MedicineService{
     }
 
 
-    public void insertMedicine(Medicine medicine, long adminID){
-        adminRepository.userIsExists(adminID).orElseThrow(
-                ()-> new RecordNotFoundException("Not found this user")
-        );
+    public void insertMedicine(Medicine medicine, long id){
+        userConfig.isExists(id);
+        userConfig.isAdmin(id);
+        medicineConfig.alreadyExists(medicine.getName());
 
-        adminRepository.isAuth(adminID).orElseThrow(
-                ()-> new ForbiddenException("Sorry, this user forbidden for this option")
-        );
-
-        if(!medicineRepository.findByName(medicine.getName()).isEmpty()){
-            throw new RuntimeException("This Medicine already exists!");
-        }
         medicineRepository.save(medicine);
     }
 
     public void updateMedicine(Medicine medicine, long adminID, long medicineID){
-        adminRepository.userIsExists(adminID).orElseThrow(
-                ()-> new RecordNotFoundException("Not found this user")
-        );
+        userConfig.isExists(adminID);
+        userConfig.isAdmin(adminID);
+        medicineConfig.notFound(medicineID);
 
-        adminRepository.isAuth(adminID).orElseThrow(
-                ()-> new ForbiddenException("Sorry, this user forbidden for this option")
-        );
-
-        if(medicineRepository.findById(medicineID).isEmpty()){
-            throw  new RecordNotFoundException("not found this medicine");
-        }
+        // to update medicine with old id
         medicine.setId(medicineID);
         medicineRepository.save(medicine);
     }
 
     public void deleteMedicine(long adminID, long medicineID){
-        adminRepository.userIsExists(adminID).orElseThrow(
-                ()-> new RecordNotFoundException("Not found this user")
-        );
+        userConfig.isExists(adminID);
+        userConfig.isAdmin(adminID);
+        medicineConfig.notFound(medicineID);
 
-        adminRepository.isAuth(adminID).orElseThrow(
-                ()-> new ForbiddenException("Sorry, this user forbidden for this option")
-        );
-
-        if(medicineRepository.findById(medicineID).isEmpty()){
-            throw  new RecordNotFoundException("not found this medicine");
-        }
         medicineRepository.deleteById(medicineID);
     }
 

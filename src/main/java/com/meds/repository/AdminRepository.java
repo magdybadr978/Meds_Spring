@@ -20,7 +20,7 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     @Query(value = "select * from users user where user.id = ?1 and user.type=1",
             nativeQuery = true
     )
-    public Optional<Admin> isAuth(long id);
+    public Optional<Admin> isAdmin(long id);
 
     // check this exists or not
     @Query(value = "select * from users user where user.id = ?1",
