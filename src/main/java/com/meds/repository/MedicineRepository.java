@@ -24,4 +24,10 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
 
 
+
+    public Optional<Medicine> findById(long id);
+
+    public List<Medicine> findByName(String name);
+
+
 }

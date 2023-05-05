@@ -17,14 +17,16 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 
 
     // Check this Admin or not
-    @Query("select user from Admin user" +
-            " where  user.id =:id and user.type=1")
-    public Optional<Integer> isAuth(@PathVariable long id);
+    @Query(value = "select * from users user where user.id = ?1 and user.type=1",
+            nativeQuery = true
+    )
+    public Optional<Admin> isAuth(long id);
 
     // check this exists or not
-    @Query("select user from Admin user" +
-            " where  user.id =:id")
-    public Optional<Integer> userIsExists(@PathVariable long id);
+    @Query(value = "select * from users user where user.id = ?1",
+            nativeQuery = true
+    )
+    public Optional<Admin> userIsExists(long id);
 
 
 }

@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MedicineService {
+public class MedicineService{
 
     @Autowired
     private MedicineRepository medicineRepository;
     @Autowired
     private AdminRepository adminRepository;
+
+
+
 
     public List<Medicine> getAllMedicines(){
         return medicineRepository.findAll();
@@ -35,17 +38,52 @@ public class MedicineService {
     }
 
 
-    public void insertMedicine(Medicine medicine, long id){
-        adminRepository.userIsExists(id).orElseThrow(
+    public void insertMedicine(Medicine medicine, long adminID){
+        adminRepository.userIsExists(adminID).orElseThrow(
                 ()-> new RecordNotFoundException("Not found this user")
         );
 
-        adminRepository.isAuth(id).orElseThrow(
+        adminRepository.isAuth(adminID).orElseThrow(
                 ()-> new ForbiddenException("Sorry, this user forbidden for this option")
         );
 
+        if(!medicineRepository.findByName(medicine.getName()).isEmpty()){
+            throw new RuntimeException("This Medicine already exists!");
+        }
         medicineRepository.save(medicine);
     }
+
+    public void updateMedicine(Medicine medicine, long adminID, long medicineID){
+        adminRepository.userIsExists(adminID).orElseThrow(
+                ()-> new RecordNotFoundException("Not found this user")
+        );
+
+        adminRepository.isAuth(adminID).orElseThrow(
+                ()-> new ForbiddenException("Sorry, this user forbidden for this option")
+        );
+
+        if(medicineRepository.findById(medicineID).isEmpty()){
+            throw  new RecordNotFoundException("not found this medicine");
+        }
+        medicine.setId(medicineID);
+        medicineRepository.save(medicine);
+    }
+
+    public void deleteMedicine(long adminID, long medicineID){
+        adminRepository.userIsExists(adminID).orElseThrow(
+                ()-> new RecordNotFoundException("Not found this user")
+        );
+
+        adminRepository.isAuth(adminID).orElseThrow(
+                ()-> new ForbiddenException("Sorry, this user forbidden for this option")
+        );
+
+        if(medicineRepository.findById(medicineID).isEmpty()){
+            throw  new RecordNotFoundException("not found this medicine");
+        }
+        medicineRepository.deleteById(medicineID);
+    }
+
 
 
 
