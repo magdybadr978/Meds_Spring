@@ -1,6 +1,7 @@
 package com.meds.cotroller;
 
 import com.meds.model.Medicine;
+import com.meds.repository.MedicineRepository;
 import com.meds.service.MedicineService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,17 @@ public class MedicineController {
 
     @Autowired
     private MedicineService medicineService;
+    @Autowired
+    private MedicineRepository medicineRepository;
 
     @GetMapping("/all")
     public List<Medicine> getAllMedicines(){
-        return medicineService.getAllMedicines();
+        return medicineService.getAllRecord(medicineRepository);
     }
 
     @GetMapping("/{id}")
     public Medicine getMedicineById(@PathVariable long id){
-        return medicineService.getMedicineById(id);
+        return medicineService.getRecordById(medicineRepository, id);
     }
 
     @GetMapping()
