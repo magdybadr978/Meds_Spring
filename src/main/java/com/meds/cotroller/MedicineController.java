@@ -22,12 +22,12 @@ public class MedicineController {
 
     @GetMapping("/all")
     public List<Medicine> getAllMedicines(){
-        return medicineService.getAllRecord(medicineRepository);
+        return medicineService.getAllRecord();
     }
 
     @GetMapping("/{id}")
     public Medicine getMedicineById(@PathVariable long id){
-        return medicineService.getRecordById(medicineRepository, id);
+        return medicineService.getRecordById( id);
     }
 
     @GetMapping()
@@ -39,8 +39,8 @@ public class MedicineController {
     @PostMapping("insert")
     public ResponseEntity<Medicine> insertMedicine(
             @RequestBody @Valid Medicine medicine,
-            @RequestHeader("adminID") long adminID){
-        medicineService.insertMedicine(medicine,adminID);
+            @RequestHeader("adminID") long adminID) throws Exception {
+        medicineService.insertRecord(medicine, medicine.getName(), adminID);
         return new ResponseEntity<>(medicine, HttpStatus.OK);
     }
     @PutMapping("update/{medicineID}")
@@ -48,7 +48,8 @@ public class MedicineController {
             @RequestBody Medicine medicine,
             @PathVariable long medicineID,
             @RequestHeader("adminID") long adminID){
-        medicineService.updateMedicine(medicine, adminID, medicineID);
+        medicine.setId(medicineID);// to update on the same medicine
+        medicineService.updateRecord(medicine, medicineID, adminID);
         return new ResponseEntity<>(medicine, HttpStatus.OK);
     }
 
@@ -57,7 +58,7 @@ public class MedicineController {
             @PathVariable long medicineID,
             @RequestHeader("adminID") long adminID
     ){
-        medicineService.deleteMedicine(adminID, medicineID);
+        medicineService.deleteRecord(adminID, medicineID);
         return new ResponseEntity<>("medicine deleted successfully", HttpStatus.OK);
 
     }

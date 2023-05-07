@@ -12,7 +12,7 @@ public class Request {
     private long id;
     @ManyToOne
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
-    private Admin user_id;
+    private User user_id;
 
     @ManyToOne
     @JoinColumn(name = "medicine_id" , referencedColumnName = "id")
@@ -27,7 +27,7 @@ public class Request {
     public Request() {
     }
 
-    public Request(long id, Admin user_id, Medicine medicine_id, Time request_date, long status) {
+    public Request(long id, User user_id, Medicine medicine_id, Time request_date, long status) {
         this.id = id;
         this.user_id = user_id;
         this.medicine_id = medicine_id;
@@ -39,7 +39,7 @@ public class Request {
         this.id = id;
     }
 
-    public void setUser_id(Admin user_id) {
+    public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
 
@@ -59,7 +59,7 @@ public class Request {
         return id;
     }
 
-    public Admin getUser_id() {
+    public User getUser_id() {
         return user_id;
     }
 

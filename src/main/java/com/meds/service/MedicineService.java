@@ -1,7 +1,5 @@
 package com.meds.service;
 
-import com.meds.configration.MedicineConfig;
-import com.meds.configration.UserConfig;
 import com.meds.errors.RecordNotFoundException;
 import com.meds.model.Medicine;
 import com.meds.repository.MedicineRepository;
@@ -11,15 +9,28 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MedicineService extends MainService<Medicine, Long>{
+public class MedicineService extends MainService<Medicine, Long> {
 
     @Autowired
     private MedicineRepository medicineRepository;
-    @Autowired
-    private UserConfig userConfig;
-    @Autowired
-    private MedicineConfig medicineConfig;
 
+    public MedicineService(MedicineRepository medicineRepository){
+        super(medicineRepository);
+    }
+
+    @Override
+    public void alreadyExists(String name) {
+        if(medicineRepository.existsMedicineByName(name)){
+            throw new RuntimeException("this medicine already exists");
+        };
+    }
+
+    @Override
+    public void notFound(long id) {
+        if(!medicineRepository.existsMedicineById(id)){
+            throw new RuntimeException("this medicine not found");
+        };
+    }
 
 
     public List<Medicine> filterMedicine(String name){
@@ -29,31 +40,8 @@ public class MedicineService extends MainService<Medicine, Long>{
     }
 
 
-    public void insertMedicine(Medicine medicine, long id){
-        userConfig.isExists(id);
-        userConfig.isAdmin(id);
-        medicineConfig.alreadyExists(medicine.getName());
 
-        medicineRepository.save(medicine);
-    }
 
-    public void updateMedicine(Medicine medicine, long adminID, long medicineID){
-        userConfig.isExists(adminID);
-        userConfig.isAdmin(adminID);
-        medicineConfig.notFound(medicineID);
-
-        // to update medicine with old id
-        medicine.setId(medicineID);
-        medicineRepository.save(medicine);
-    }
-
-    public void deleteMedicine(long adminID, long medicineID){
-        userConfig.isExists(adminID);
-        userConfig.isAdmin(adminID);
-        medicineConfig.notFound(medicineID);
-
-        medicineRepository.deleteById(medicineID);
-    }
 
 
 
