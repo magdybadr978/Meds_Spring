@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 
 @Entity
 @Table(name = "users")
@@ -21,6 +25,8 @@ public class User {
     @Email(message = "you should enter a valid email")
     private String email;
 
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Request> requests = new ArrayList<>();
 
     @Column(name = "password")
     @NotEmpty(message = "password must not be empty")
@@ -29,7 +35,6 @@ public class User {
 
     @Column(name = "phone", unique = true)
     @NotEmpty(message = "phone must not be empty")
-    @Min(value = 11 , message = "phone number should be 11 numbers")
     private String phone;
 
 
@@ -110,4 +115,6 @@ public class User {
     public long getType() {
         return type;
     }
+
+
 }

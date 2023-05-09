@@ -1,12 +1,15 @@
 package com.meds.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "Requests")
+
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +18,7 @@ public class Request {
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
     private User user_id;
 
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.REMOVE})
     @JoinColumn(name = "medicine_id" , referencedColumnName = "id")
     private Medicine medicine_id;
 

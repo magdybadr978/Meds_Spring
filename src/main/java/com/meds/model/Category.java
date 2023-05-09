@@ -3,6 +3,9 @@ package com.meds.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "Categories")
 public class Category {
@@ -16,6 +19,9 @@ public class Category {
     @Column(name = "description")
     @NotEmpty(message = "description must not be empty")
     private  String description;
+
+    @OneToMany(mappedBy = "category_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Medicine> medicines = new ArrayList<>();
 
     public Category() {
 

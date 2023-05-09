@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "Medicines")
 public class Medicine {
@@ -26,6 +29,8 @@ public class Medicine {
     @Column(name = "expiration_date")
     @NotEmpty(message = "expiration_date must not be empty")
     private String expiration_date;
+    @OneToMany(mappedBy = "medicine_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Request> requests = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")

@@ -1,6 +1,8 @@
 package com.meds.cotroller;
 
 
+import com.meds.configration.AdminAuthorization;
+import com.meds.configration.UserAuthorization;
 import com.meds.model.Request;
 import com.meds.repository.RequestRepository;
 import com.meds.service.RequestSerivce;
@@ -20,6 +22,10 @@ public class RequestController {
     private RequestSerivce requsetSerivce;
     @Autowired
     private RequestRepository requestRepository;
+    @Autowired
+    private AdminAuthorization adminAuthorization;
+    @Autowired
+    private UserAuthorization userAuthorization;
 
     @GetMapping("all")
     public List<Request> getAllRequest() {
@@ -34,8 +40,9 @@ public class RequestController {
     @PostMapping("insert")
     public ResponseEntity<Request> insertRequest(
             @RequestBody Request request,
-            @RequestHeader("adminID") long adminID) {
-        requsetSerivce.insertRecord(request, adminID);
+            @RequestHeader("userID") long userID) {
+        userAuthorization.isExists(userID);
+        requsetSerivce.insertRecord(request);
         return new ResponseEntity<>(request, HttpStatus.OK);
     }
 
@@ -45,7 +52,8 @@ public class RequestController {
             @RequestBody Request request,
             @PathVariable long requestID,
             @RequestHeader("adminID") long adminID) {
-        requsetSerivce.updateRecord(request, requestID, adminID);
+        adminAuthorization.isAdmin(adminID);
+        requsetSerivce.updateRecord(request, requestID);
         return new ResponseEntity<>("Request updated successfully", HttpStatus.OK);
     }
 
@@ -54,7 +62,8 @@ public class RequestController {
     public ResponseEntity<String> deleteRequest(
             @PathVariable long requestID,
             @RequestHeader("adminID") long adminID){
-        requsetSerivce.deleteRecord(adminID, requestID);
+        adminAuthorization.isAdmin(adminID);
+        requsetSerivce.deleteRecord(requestID);
         return new ResponseEntity<>("Request deleted successfully", HttpStatus.OK);
     }
 

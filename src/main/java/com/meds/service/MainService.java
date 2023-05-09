@@ -1,6 +1,6 @@
 package com.meds.service;
 
-import com.meds.configration.AdminAuth;
+import com.meds.configration.AdminAuthorization;
 import com.meds.errors.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class MainService<DTClass, DTId> {
 
     @Autowired
-    private AdminAuth adminAuth;
+    private AdminAuthorization adminAuth;
 
     private final JpaRepository<DTClass, DTId> repository;
 
@@ -31,21 +31,18 @@ public abstract class MainService<DTClass, DTId> {
 
 
 
-    public void insertRecord(DTClass newRecord, long adminId) {
-        adminAuth.adminAuthorization(adminId);
+    public void insertRecord(DTClass newRecord) {
         checksBeforeInsert(newRecord);
         repository.save(newRecord);
     }
 
-    public void updateRecord(DTClass record, long recordId, long adminId) {
-        adminAuth.adminAuthorization(adminId);
+    public void updateRecord(DTClass record, long recordId) {
         checksBeforeUpdate(recordId);
         DTClass preparedRecord = prepareRecordForUpdate(record, recordId);
         repository.save(preparedRecord);
     }
 
-    public void deleteRecord(long adminId, DTId recordId) {
-        adminAuth.adminAuthorization(adminId);
+    public void deleteRecord( DTId recordId) {
         checksBeforeDelete(recordId);
         repository.deleteById(recordId);
     }

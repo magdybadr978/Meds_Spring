@@ -44,7 +44,7 @@ public class MedicineService extends MainService<Medicine, Long> {
 
     public void notFound(long id) {
         if(!medicineRepository.existsMedicineById(id)){
-            throw new RuntimeException("this medicine not found");
+            throw new RecordNotFoundException("this medicine not found");
         };
     }
 

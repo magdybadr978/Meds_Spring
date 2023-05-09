@@ -59,4 +59,11 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse("Forbidden", detalis);
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
+    @ExceptionHandler(UnauthorizedException.class)
+    public final ResponseEntity<ErrorResponse> handleUnauthorizedException(Exception ex, WebRequest request) {
+        List<String> detalis = new ArrayList<>();
+        detalis.add(ex.getLocalizedMessage());
+        ErrorResponse error = new ErrorResponse("Unauthorized", detalis);
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
 }

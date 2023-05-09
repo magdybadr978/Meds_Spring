@@ -19,26 +19,26 @@ public class UserService extends MainService<User, Long> {
         super(userRepository);
     }
 
-
-
     @Override
     public <T> void checksBeforeInsert(T check) {
-
+        User user = (User) check;
+        alreadyExists(user.getEmail());
     }
 
     @Override
     public <T> void checksBeforeUpdate(T check) {
-
+        notFound((Long) check);
     }
 
     @Override
     public <T> void checksBeforeDelete(T check) {
-
+        notFound((long) check);
     }
 
     @Override
-    public <T> User prepareRecordForUpdate(User record, T any) {
-        return null;
+    public <T> User prepareRecordForUpdate(User userFromBody, T userId) {
+        userFromBody.setId((Long) userId);
+        return userFromBody;
     }
 
     public void notFound(long id) {
@@ -46,49 +46,13 @@ public class UserService extends MainService<User, Long> {
             throw new RecordNotFoundException("This User not found");
         }
     }
+
+    public void alreadyExists(String email) {
+        if(userRepository.existsUserByEmail(email)){
+            throw new RuntimeException("the email of this user already exists");
+        };
+    }
 }
-//
-//    public List<User> getAllUsers() {
-//        try{
-//            return userRepository.findAll();
-//        } catch(Exception e){
-//          throw new RuntimeException("there is error in  get all users");
-//        }
-//
-//    }
-//
-//    public User getSpecificUser(long id) {
-//        return userRepository.findById(id).orElseThrow(null);
-//    }
-//
-//    public List<User> getUserByName(String name) {
-//        return userRepository.findByName(name);
-//    }
-//
-//    public void addUser(User user) {
-//        try{
-//            userRepository.save(user);
-//        }catch (Exception e){
-//            throw new RuntimeException("there is error in add user");
-//        }
-//
-//    }
-//
-//    public void updateUser(User user) {
-//        try{
-//            userRepository.save(user);
-//        }catch (Exception e){
-//            throw new RuntimeException("there is error in update user");
-//        }
-//
-//    }
-//
-//
-//    public void deleteUser(long id) {
-//        try{
-//            userRepository.deleteById(id);
-//        }catch (Exception e){
-//            throw new RuntimeException("there is error in delete user");
-//        }
-//
-//    }
+
+
+
