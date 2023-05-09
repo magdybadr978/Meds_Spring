@@ -89,5 +89,5 @@ public class Medicine {
 
     public long getCategory_id() {
         return category_id.getId();
-    }
+    } // updated
 }

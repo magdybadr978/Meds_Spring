@@ -17,11 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     )
     public Optional<User> isAdmin(long id);
 
-    // check this exists or not
-//    @Query(value = "select * from ?1 user where user.id = ?2",
-//            nativeQuery = true
-//    )
-//    public Optional<User> userIsExists(String, long id);
+    public boolean existsUserById(long id);
 
 
 }

@@ -5,6 +5,8 @@ import com.meds.model.Medicine;
 import com.meds.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -19,19 +21,39 @@ public class MedicineService extends MainService<Medicine, Long> {
     }
 
     @Override
-    public void alreadyExists(String name) {
-        if(medicineRepository.existsMedicineByName(name)){
-            throw new RuntimeException("this medicine already exists");
-        };
+    public <T> void checksBeforeInsert(T check) {
+        Medicine medicine = (Medicine) check;
+        alreadyExists(medicine.getName());
     }
 
     @Override
+    public <T> void checksBeforeUpdate(T check) {
+        notFound((long) check);
+    }
+
+    @Override
+    public <T> void checksBeforeDelete(T check){
+        notFound((long) check);
+    }
+
+    @Override
+    public <T> Medicine prepareRecordForUpdate(Medicine medicineFromBody, T medicineId) {
+        medicineFromBody.setId((Long) medicineId);
+        return medicineFromBody;
+    }
+
     public void notFound(long id) {
         if(!medicineRepository.existsMedicineById(id)){
             throw new RuntimeException("this medicine not found");
         };
     }
 
+
+    public void alreadyExists(String name) {
+        if(medicineRepository.existsMedicineByName(name)){
+            throw new RuntimeException("this medicine already exists");
+        };
+    }
 
     public List<Medicine> filterMedicine(String name){
         return medicineRepository.filterMedicine(name).orElseThrow(

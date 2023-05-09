@@ -39,18 +39,17 @@ public class MedicineController {
     @PostMapping("insert")
     public ResponseEntity<Medicine> insertMedicine(
             @RequestBody @Valid Medicine medicine,
-            @RequestHeader("adminID") long adminID) throws Exception {
-        medicineService.insertRecord(medicine, medicine.getName(), adminID);
+            @RequestHeader("adminID") long adminID) {
+        medicineService.insertRecord(medicine, adminID);
         return new ResponseEntity<>(medicine, HttpStatus.OK);
     }
     @PutMapping("update/{medicineID}")
-    public ResponseEntity<Medicine> updateMedicine(
+    public ResponseEntity<String> updateMedicine(
             @RequestBody Medicine medicine,
             @PathVariable long medicineID,
             @RequestHeader("adminID") long adminID){
-        medicine.setId(medicineID);// to update on the same medicine
         medicineService.updateRecord(medicine, medicineID, adminID);
-        return new ResponseEntity<>(medicine, HttpStatus.OK);
+        return new ResponseEntity<>("Medicine updated", HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{medicineID}")

@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
-//    JpaRepository<Medicine, Long>
     // To Filter Medicines
     @Query("select med from Medicine med" +
             " where med.name like :nameBind%")

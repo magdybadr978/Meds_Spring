@@ -2,7 +2,8 @@ package com.meds.model;
 
 import jakarta.persistence.*;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "Requests")
@@ -19,20 +20,23 @@ public class Request {
     private Medicine medicine_id;
 
     @Column(name = "request_date")
-    private Time request_date;
+    private String request_date;
 
     @Column(name = "status")
     private long status;
 
     public Request() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        this.request_date = dateTimeFormatter.format(now);
     }
 
-    public Request(long id, User user_id, Medicine medicine_id, Time request_date, long status) {
+    public Request(long id, User user_id, Medicine medicine_id, long status) {
         this.id = id;
         this.user_id = user_id;
         this.medicine_id = medicine_id;
-        this.request_date = request_date;
         this.status = status;
+
     }
 
     public void setId(long id) {
@@ -47,7 +51,7 @@ public class Request {
         this.medicine_id = medicine_id;
     }
 
-    public void setRequest_date(Time request_date) {
+    public void setRequest_date(String request_date) {
         this.request_date = request_date;
     }
 
@@ -59,15 +63,15 @@ public class Request {
         return id;
     }
 
-    public User getUser_id() {
-        return user_id;
-    }
+    public long getUser_id() {
+        return user_id.getId();
+    }// updated
 
-    public Medicine getMedicine_id() {
-        return medicine_id;
-    }
+    public long getMedicine_id() {
+        return medicine_id.getId();
+    }// updated
 
-    public Time getRequest_date() {
+    public String getRequest_date() {
         return request_date;
     }
 
