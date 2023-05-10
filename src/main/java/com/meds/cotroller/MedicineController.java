@@ -18,8 +18,7 @@ public class MedicineController {
 
     @Autowired
     private MedicineService medicineService;
-    @Autowired
-    private MedicineRepository medicineRepository;
+
     @Autowired
     private AdminAuthorization adminAuthorization;
 

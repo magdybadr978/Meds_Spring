@@ -1,30 +1,56 @@
 package com.meds.service;
 
+import com.meds.errors.RecordNotFoundException;
 import com.meds.model.Category;
 import com.meds.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService {
+public class CategoryService extends MainService<Category, Long>{
     @Autowired
     private CategoryRepository categoryRepository;
-    public List<Category>getAllCategory(){
-        return categoryRepository.findAll();
+
+    public CategoryService(CategoryRepository categoryRepository) {
+        super(categoryRepository);
     }
-    public Optional<Category> getSpecificCategory(long id){
-        return categoryRepository.findById(id);
+
+    @Override
+    public <T> void checksBeforeInsert(T check) {
+        Category category = (Category) check;
+        alreadyExists(category.getName());
     }
-    public void addCategory(Category category){
-        categoryRepository.save(category);
+
+    @Override
+    public <T> void checksBeforeUpdate(T check) {
+        notFound((long) check);
     }
-    public void updateCategory(Category category){
-        categoryRepository.save(category);
+
+    @Override
+    public <T> void checksBeforeDelete(T check) {
+        notFound((long) check);
     }
-    public void deleteCategory(long id){
-        categoryRepository.deleteById(id);
+
+    @Override
+    public <T> Category prepareRecordForUpdate(Category categoryFromBody, T id) {
+        categoryFromBody.setId((Long) id);
+        return categoryFromBody;
+    }
+
+    public void notFound(long id) {
+        if(!categoryRepository.existsCategoriesById(id)){
+            throw new RecordNotFoundException("this Category not found");
+        };
+    }
+
+
+    public void alreadyExists(String name) {
+        if(categoryRepository.existsCategoriesByName(name)){
+            throw new RuntimeException("this category already exists");
+        };
     }
 }
