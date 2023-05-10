@@ -41,6 +41,17 @@ public class UserService extends MainService<User, Long> {
         return userFromBody;
     }
 
+    public void login(User user){
+
+        if(!userRepository.existsUserByEmail(user.getEmail())){
+            throw new RecordNotFoundException("this email not fuound");
+        };
+        User newUser = userRepository.findUserByEmail(user.getEmail());
+        if (!user.getPassword().equals(newUser.getPassword())){
+            throw new RuntimeException("this password incorrect! ");
+        }
+    }
+
     public void notFound(long id) {
         if(!userRepository.existsUserById(id)){
             throw new RecordNotFoundException("This User not found");

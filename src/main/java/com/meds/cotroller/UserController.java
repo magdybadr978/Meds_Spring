@@ -58,6 +58,11 @@ public class UserController {
         return new ResponseEntity<>("deleted successfully", HttpStatus.OK);
     }
 
+    @PostMapping("login")
+    public ResponseEntity<String> loginUser(@RequestBody User user){
+        userService.login(user);
+        return new ResponseEntity<>("login successfully ",HttpStatus.OK);
+    }
 }
 
 

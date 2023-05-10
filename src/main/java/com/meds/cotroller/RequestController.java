@@ -28,12 +28,16 @@ public class RequestController {
     private UserAuthorization userAuthorization;
 
     @GetMapping("all")
-    public List<Request> getAllRequest() {
+    public List<Request> getAllRequest(@RequestHeader("adminID") long adminID) {
+        adminAuthorization.isAdmin(adminID);
         return requsetSerivce.getAllRecord();
     }
 
     @GetMapping("{id}")
-    public Request getRequestById(@PathVariable long id) {
+    public Request getRequestById(
+            @PathVariable long id,
+            @RequestHeader("adminID") long adminID) {
+        adminAuthorization.isAdmin(adminID);
         return requsetSerivce.getRecordById(id);
     }
 
