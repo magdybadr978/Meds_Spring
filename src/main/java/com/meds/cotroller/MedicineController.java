@@ -47,13 +47,12 @@ public class MedicineController {
         return new ResponseEntity<>(medicine, HttpStatus.OK);
     }
 
-    @PutMapping("update/{medicineID}")
+    @PutMapping("update")
     public ResponseEntity<String> updateMedicine(
             @RequestBody Medicine medicine,
-            @PathVariable long medicineID,
             @RequestHeader("adminID") long adminID) {
         adminAuthorization.isAdmin(adminID);
-        medicineService.updateRecord(medicine, medicineID);
+        medicineService.updateRecord(medicine);
         return new ResponseEntity<>("Medicine updated", HttpStatus.OK);
     }
 

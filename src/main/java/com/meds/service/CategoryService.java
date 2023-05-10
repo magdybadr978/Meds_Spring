@@ -27,7 +27,8 @@ public class CategoryService extends MainService<Category, Long>{
 
     @Override
     public <T> void checksBeforeUpdate(T check) {
-        notFound((long) check);
+        Category category = (Category) check;
+        notFound(category.getId());
     }
 
     @Override
@@ -36,8 +37,7 @@ public class CategoryService extends MainService<Category, Long>{
     }
 
     @Override
-    public <T> Category prepareRecordForUpdate(Category categoryFromBody, T id) {
-        categoryFromBody.setId((Long) id);
+    public <T> Category prepareRecordForUpdate(Category categoryFromBody) {
         return categoryFromBody;
     }
 

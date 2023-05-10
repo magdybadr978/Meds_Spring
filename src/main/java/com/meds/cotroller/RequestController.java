@@ -47,13 +47,12 @@ public class RequestController {
     }
 
 
-    @PutMapping("update/{requestID}")
+    @PutMapping("update")
     public ResponseEntity<String> updateRequest(
             @RequestBody Request request,
-            @PathVariable long requestID,
             @RequestHeader("adminID") long adminID) {
         adminAuthorization.isAdmin(adminID);
-        requsetSerivce.updateRecord(request, requestID);
+        requsetSerivce.updateRecord(request);
         return new ResponseEntity<>("Request updated successfully", HttpStatus.OK);
     }
 

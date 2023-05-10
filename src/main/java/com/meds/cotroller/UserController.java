@@ -40,13 +40,12 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{userID}")
+    @PutMapping("/update")
     public ResponseEntity<String> updateUser(
             @Valid @RequestBody User newUser,
-            @PathVariable long userID,
             @RequestHeader("adminID") long adminID) {
         adminAuthorization.isAdmin(adminID);
-        userService.updateRecord(newUser, userID);
+        userService.updateRecord(newUser);
         return new ResponseEntity<>("user updated successfully", HttpStatus.OK);
     }
 

@@ -36,9 +36,9 @@ public abstract class MainService<DTClass, DTId> {
         repository.save(newRecord);
     }
 
-    public void updateRecord(DTClass record, long recordId) {
-        checksBeforeUpdate(recordId);
-        DTClass preparedRecord = prepareRecordForUpdate(record, recordId);
+    public void updateRecord(DTClass record) {
+        checksBeforeUpdate(record);
+        DTClass preparedRecord = prepareRecordForUpdate(record);
         repository.save(preparedRecord);
     }
 
@@ -55,8 +55,7 @@ public abstract class MainService<DTClass, DTId> {
     */
     public abstract <T> void checksBeforeInsert(T check);
     public abstract <T> void checksBeforeUpdate(T check);
-
     public abstract <T> void checksBeforeDelete(T check);
-    public abstract <T> DTClass prepareRecordForUpdate(DTClass record, T any);
+    public abstract <T> DTClass prepareRecordForUpdate(DTClass record);
 
 }

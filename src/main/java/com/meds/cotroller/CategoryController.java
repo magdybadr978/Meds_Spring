@@ -40,13 +40,12 @@ public class CategoryController {
         categoryService.insertRecord(category);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
-    @PutMapping("/update/{categoryId}")
+    @PutMapping("/update")
     public ResponseEntity<String> updateCategory(
             @RequestBody @Valid Category category,
-            @RequestHeader("adminID") long adminID,
-            @PathVariable long categoryId){
+            @RequestHeader("adminID") long adminID){
         adminAuthorization.isAdmin(adminID);
-        categoryService.updateRecord(category, categoryId);
+        categoryService.updateRecord(category);
         return new ResponseEntity<>("Category updated successfully", HttpStatus.OK);
     }
     @DeleteMapping("/delete/{categoryId}")

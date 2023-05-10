@@ -27,7 +27,8 @@ public class UserService extends MainService<User, Long> {
 
     @Override
     public <T> void checksBeforeUpdate(T check) {
-        notFound((Long) check);
+        User user = (User) check;
+        notFound(user.getId());
     }
 
     @Override
@@ -36,8 +37,7 @@ public class UserService extends MainService<User, Long> {
     }
 
     @Override
-    public <T> User prepareRecordForUpdate(User userFromBody, T userId) {
-        userFromBody.setId((Long) userId);
+    public <T> User prepareRecordForUpdate(User userFromBody) {
         return userFromBody;
     }
 

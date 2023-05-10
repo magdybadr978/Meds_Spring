@@ -22,15 +22,16 @@ public class RequestSerivce extends MainService<Request, Long> {
 
 
     @Override
-    public <T> void checksBeforeInsert(T check) {
-        Request request = (Request) check;
-        medicineService.notFound(request.getMedicine_id());
-        userService.notFound(request.getUser_id());
+    public <T> void checksBeforeInsert(T request) {
+        Request req = (Request) request;
+        medicineService.notFound(req.getMedicine_id());
+        userService.notFound(req.getUser_id());
     }
 
     @Override
-    public <T> void checksBeforeUpdate(T check) {
-        notFound((long) check);
+    public <T> void checksBeforeUpdate(T request) {
+        Request req = (Request) request ;
+        notFound(req.getId());
     }
 
     @Override
@@ -41,13 +42,13 @@ public class RequestSerivce extends MainService<Request, Long> {
 
 
     @Override
-    public <T> Request prepareRecordForUpdate(Request requestFromBody, T requestId) {
+    public <T> Request prepareRecordForUpdate(Request requestFromBody) {
         /*
          I get the record of request from database by request id
          and then update the status of this record
          and return that
         */
-        Request pareparedRequest = requestRepository.findById((long) requestId);
+        Request pareparedRequest = requestRepository.findById(requestFromBody.getId());
         pareparedRequest.setStatus(requestFromBody.getStatus());
         return pareparedRequest;
     }

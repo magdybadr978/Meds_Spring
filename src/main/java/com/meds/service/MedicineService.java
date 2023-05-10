@@ -28,7 +28,8 @@ public class MedicineService extends MainService<Medicine, Long> {
 
     @Override
     public <T> void checksBeforeUpdate(T check) {
-        notFound((long) check);
+        Medicine medicine = (Medicine) check;
+        notFound(medicine.getId());
     }
 
     @Override
@@ -37,8 +38,7 @@ public class MedicineService extends MainService<Medicine, Long> {
     }
 
     @Override
-    public <T> Medicine prepareRecordForUpdate(Medicine medicineFromBody, T medicineId) {
-        medicineFromBody.setId((Long) medicineId);
+    public <T> Medicine prepareRecordForUpdate(Medicine medicineFromBody) {
         return medicineFromBody;
     }
 
